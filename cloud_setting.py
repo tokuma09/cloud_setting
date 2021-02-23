@@ -89,8 +89,8 @@ if __name__ == '__main__':
 
     if 'KAGGLE_URL_BASE' in set(os.environ.keys()):
         kaggle_settings()
-        git_clone(args.g)
+        git_clone(args.github_url)
 
     elif 'COLAB_GPU' in set(os.environ.keys()):
         colab_settings()
-        git_clone(args.g)
+        git_clone(args.github_url)
