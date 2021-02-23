@@ -79,7 +79,7 @@ def git_clone(github_https, user='tokuma09', token_env='GITHUB_PAT'):
 
 def get_arguments():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--github_url', '-g', type='str', help='Github URL')
+    parser.add_argument('--github_url', '-g', help='Github URL')
     return parser.parse_args()
 
 
