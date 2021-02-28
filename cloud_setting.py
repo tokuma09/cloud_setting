@@ -33,6 +33,9 @@ def colab_settings(dir_name='My Drive/keys', key_name='keys.yaml'):
     from google.colab import auth
     from google.colab import drive
 
+    # store current dir
+    pwd = os.getcwd()
+
     # GCP
     auth.authenticate_user()
 
@@ -45,6 +48,9 @@ def colab_settings(dir_name='My Drive/keys', key_name='keys.yaml'):
 
     for key, value in secret_dict.items():
         os.environ[key] = value
+
+    # move previous dir
+    os.chdir(pwd)
 
 
 def git_clone(github_https, user='tokuma09', token_env='GITHUB_PAT'):
