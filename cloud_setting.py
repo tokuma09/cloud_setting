@@ -1,7 +1,6 @@
 import os
 import subprocess
 import yaml
-import argparse
 
 
 def kaggle_settings():
@@ -17,6 +16,9 @@ def kaggle_settings():
     secret_dict['NEPTUNE_API_TOKEN'] = user_secrets.get_secret(
         'NEPTUNE_API_TOKEN')
     secret_dict['GITHUB_PAT'] = user_secrets.get_secret('GITHUB_PAT')
+
+    # For gcsfs
+    UserSecretsClient().set_gcloud_credentials()
 
     for key, value in secret_dict.items():
         os.environ[key] = value
@@ -73,24 +75,5 @@ def git_clone(github_https, user='tokuma09', token_env='GITHUB_PAT'):
                                  owner=owner,
                                  repo_name=repo)
 
-    subprocess.run(['git', 'clone', repo_path], shell=True)
+    subprocess.run(['git', 'clone', repo_path])
     print('Successfully Cloned!')
-
-
-def get_arguments():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--github_url', '-g', help='Github URL')
-    return parser.parse_args()
-
-
-if __name__ == '__main__':
-
-    args = get_arguments()
-
-    if 'KAGGLE_URL_BASE' in set(os.environ.keys()):
-        kaggle_settings()
-        git_clone(args.github_url)
-
-    elif 'COLAB_GPU' in set(os.environ.keys()):
-        colab_settings()
-        git_clone(args.github_url)
